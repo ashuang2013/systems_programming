@@ -1,0 +1,18 @@
+CFLAGS= -Wall -Wextra -Werror -ggdb -Wno-unused-function -DMU_DEBUG
+
+progs = adns_lookup 
+objects = adns_lookup.o common.o mu.o
+headers = mu.h uthash.h
+
+all: $(progs)
+
+adns_lookup: adns_lookup.o common.o mu.o
+	$(CC) -o $@ $^
+
+$(objects) : %.o : %.c $(headers)
+	$(CC) -c -o $@ $(CFLAGS) $<
+
+clean:
+	rm -rf $(progs) $(objects)
+
+.PHONY: all clean
